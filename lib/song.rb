@@ -4,11 +4,11 @@ require 'active_support/inflector'
 class Song
 
 
-  def self.table_name
+  def Song.table_name
     self.to_s.downcase.pluralize
   end
 
-  def self.column_names
+  def Song.column_names
     DB[:conn].results_as_hash = true
 
     sql = "pragma table_info('#{table_name}')"
@@ -53,7 +53,7 @@ class Song
     self.class.column_names.delete_if {|col| col == "id"}.join(", ")
   end
 
-  def self.find_by_name(name)
+  def Song.find_by_name(name)
     sql = "SELECT * FROM #{self.table_name} WHERE name = '#{name}'"
     DB[:conn].execute(sql)
   end
